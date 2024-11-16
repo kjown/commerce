@@ -1,0 +1,18 @@
+# Django #
+*.log
+*.pot
+*.pyc
+db.sqlite3
+/media/
+
+# Python Bytecode #
+__pyache__/
+*.py[cod]
+
+
+# Backup files #
+*.bak
+
+# IDE Specific #
+.vscode/
+.idea/
