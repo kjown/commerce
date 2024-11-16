@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ categories.name }}
+{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center my-4">
+        <h2>{{ categories.name }}</h2>
+    </div>
+    
+    {% include 'auctions/_listing_card.html' %}
+{% endblock %}
