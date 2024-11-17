@@ -4,7 +4,7 @@
 ## Description
 This project is an implementation of an eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings and add listings to a "watchlist".
 
-The applicatio is built using the [Django](https://www.djangoproject.com) web framework and SQLite as the database backend.
+The application is built using the [Django](https://www.djangoproject.com) web framework and SQLite as the database backend.
 
 [Project specification](https://cs50.harvard.edu/web/2020/projects/2/commerce/)
 

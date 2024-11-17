@@ -11,13 +11,16 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+class Bid(models.Model):
+    bid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userBid")
 
 class Listing(models.Model):
     title = models.CharField(max_length=32)
     description = models.TextField()
     imageUrl = models.URLField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="category")
-    starting_price = models.DecimalField(max_digits=10, decimal_places=2, )
+    starting_price = models.ForeignKey(Bid, on_delete=models.CASCADE, blank=True, null=True,  related_name="bidPrice")
     current_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     created_time = models.DateTimeField(auto_now_add=True)
