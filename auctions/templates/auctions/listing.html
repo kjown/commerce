@@ -21,6 +21,34 @@
     <img src="{{ listing.imageUrl }}" alt="{{ listing.title }}" height="400px">
     <p>{{ listing.description }}</p>
     <p>Seller: {{ listing.creator }}</p>
-    <h4>Starting bid: RM{{ listing.starting_price }}</h4>
+    <p>Starting bid: RM{{ listing.starting_price }}</p>
+
+    <h2>Comments</h2>
+    {% if user.is_authenticated %}
+        <form action="{% url 'addComment' id=listing.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="newComment" placeholder="Add New Comment">
+                <button type="submit" class="btn btn-warning">Post comment</button>
+            </div>
+        </form>
+    {% endif %}
+    <ul class="list-group">
+        {% for comment in allComments %}
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="comment-info text-muted">
+                        <strong class="">
+                            {{ comment.author }}  
+                        </strong>
+                        <span>TODO: Time Posted</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ comment.comment }}</p>
+            </div>
+        {% endfor %}
+    </ul>
     
 {% endblock %}
