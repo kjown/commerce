@@ -11,11 +11,13 @@ def listing(request, id):
     isListingInWatchlist = request.user in listingData.watchlist.all()
     allComments = Comment.objects.filter(listing=listingData)
     isSeller = request.user.username == listingData.creator.username
+    watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/listing.html", {
         "listing": listingData,
         "isListingInWatchlist": isListingInWatchlist,
         "allComments": allComments,
-        "isSeller": isSeller
+        "isSeller": isSeller,
+        "watchlist_count": watchlist_count,
     })
 
 def closeAuction(request, id):
@@ -103,40 +105,46 @@ def addWatchlist(request, id):
 def index(request):
     activeListings = Listing.objects.filter(isActive=True)
     allCategories = Category.objects.all()
-    watchlist_count = request.user.listingWatchlist.count()
+    # watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/index.html", {
         "listings": activeListings,
         "categories": allCategories,
-        "watchlist_count": watchlist_count,
+        # "watchlist_count": watchlist_count,
     })
 
 def displayCategory(request, category_name):
     category = Category.objects.get(name=category_name)
     activeListings = Listing.objects.filter(isActive=True, category=category)
     allCategories = Category.objects.all()
+    # watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/category_listing.html", {
         "listings": activeListings,
-        "categories": category
+        "categories": category,
+        # "watchlist_count": watchlist_count,
     })
 
 def categories(request):
     allCategories = Category.objects.all()
+    # watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/categories.html", {
-        "categories": allCategories
+        "categories": allCategories,
+        # "watchlist_count": watchlist_count,
     })
 
 
 def createListing(request):
+    watchlist_count = request.user.listingWatchlist.count()
+
     if request.method == "GET":
         allCategories = Category.objects.all()
         return render(request, "auctions/create.html", {
-            "categories": allCategories
+            "categories": allCategories,
         })
     else:
-        # Get data from the form
+       # Get data from the form
         title = request.POST["title"]
         description = request.POST["description"]
-        imageurl = request.POST["imageurl"]
+        imageurl = request.POST.get("imageurl", None)
         starting_price = request.POST["starting_price"]
         category = request.POST["category"]
 

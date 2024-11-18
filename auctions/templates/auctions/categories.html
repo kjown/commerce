@@ -1,18 +1,25 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-    <div class="container d-flex justify-content-center my-4">
-        <h2>Categories</h2>
+    <div class="container my-4">
+        <div class="d-flex justify-content-center">
+            <h2>Categories</h2>
+        </div>
     </div>
+    
     <div class="container">
-        <ul class="list-group">
-            {% for category in categories %}
-                <li class="list-group-item">
-                    <a href="{% url 'displayCategory' category.name %}">{{ category.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                    <ul class="list-group text-center">
+                        {% for category in categories %}
+                            <li class="list-group-item align-items-center">
+                                <a href="{% url 'displayCategory' category.name %}" class="d-block">{{ category.name }}</a>
+                                <span class="badge badge-primary badge-pill">{{ category.listings_count }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
     </div>
     
 {% endblock %}

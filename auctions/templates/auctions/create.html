@@ -5,35 +5,42 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Create New Listing</h2>
+    <div class="container my-4">
+        <h2 class="text-center">Create New Listing</h2>
 
-    <form action="{% url 'create' %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="title" class="form-label">Enter Title</label>
-            <input type="text" name="title" class="form-control" id="title" placeholder="Title">
-        </div>
-        <div class="form-group">
-            <label for="description" class="form-label">Enter Description</label>
-            <input type="text" name="description" class="form-control" id="description" placeholder="Description">
-        </div>
-        <div class="form-group">
-            <label for="imageurl" class="form-label">Image URL</label>
-            <input type="text" name="imageurl" class="form-control" id="imageurl" placeholder="Image URL">
-        </div>
-        <div class="form-group">
-            <label for="starting_price" class="form-label">Enter Price</label>
-            <input type="number" min="0" name="starting_price" class="form-control" id="starting_price" placeholder="Price">
-        </div>
-        <div class="form-group">
-            <label for="cars">Category:</label>
-            <select name="category" id="category">
-                {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <input class="btn btn-primary" type="submit" value="Create New Listing">
-    </form> 
-
+        <form action="{% url 'create' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="title" class="form-label">Enter Title</label>
+                <input type="text" name="title" class="form-control" id="title" placeholder="Title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description" class="form-label">Enter Description</label>
+                <textarea name="description" class="form-control" id="description" placeholder="Description" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="imageurl" class="form-label">Image URL</label>
+                <input type="text" name="imageurl" class="form-control" id="imageurl" placeholder="Image URL">
+            </div>
+            
+            <div class="form-group">
+                <label for="starting_price" class="form-label">Enter Price</label>
+                <input type="number" min="0" name="starting_price" class="form-control" id="starting_price" placeholder="Price" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" id="category" class="form-control" required>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Create New Listing</button>
+        </form>
+    </div>
 {% endblock %}
