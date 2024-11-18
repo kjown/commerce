@@ -82,8 +82,10 @@ def addComment(request, id):
 def watchlist(request):
     currentUser = request.user
     listings = currentUser.listingWatchlist.all()
+    watchlist_count = listings.count()
     return render(request, "auctions/watchlist.html", {
-        "listings": listings
+        "listings": listings,
+        "watchlist_count": watchlist_count,
     })
 
 def removeWatchlist(request, id):
@@ -101,9 +103,11 @@ def addWatchlist(request, id):
 def index(request):
     activeListings = Listing.objects.filter(isActive=True)
     allCategories = Category.objects.all()
+    watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/index.html", {
         "listings": activeListings,
         "categories": allCategories,
+        "watchlist_count": watchlist_count,
     })
 
 def displayCategory(request, category_name):
