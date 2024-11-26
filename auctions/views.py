@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import User, Category, Listing, Comment, Bid
 
@@ -11,13 +12,13 @@ def listing(request, id):
     isListingInWatchlist = request.user in listingData.watchlist.all()
     allComments = Comment.objects.filter(listing=listingData)
     isSeller = request.user.username == listingData.creator.username
-    watchlist_count = request.user.listingWatchlist.count()
+    # watchlist_count = request.user.listingWatchlist.count()
     return render(request, "auctions/listing.html", {
         "listing": listingData,
         "isListingInWatchlist": isListingInWatchlist,
         "allComments": allComments,
         "isSeller": isSeller,
-        "watchlist_count": watchlist_count,
+        # "watchlist_count": watchlist_count,
     })
 
 def closeAuction(request, id):
@@ -99,6 +100,11 @@ def removeWatchlist(request, id):
 def addWatchlist(request, id):
     listingData = Listing.objects.get(pk=id)
     currentUser = request.user
+
+    if not currentUser.is_authenticated:
+        messages.warning(request, "You need to log in to add items to your watchlist.")
+        return HttpResponseRedirect(reverse("login"))
+
     listingData.watchlist.add(currentUser)
     return HttpResponseRedirect(reverse("listing", args=(id, )))
 
@@ -145,6 +151,8 @@ def createListing(request):
         title = request.POST["title"]
         description = request.POST["description"]
         imageurl = request.POST.get("imageurl", None)
+        if not imageurl:
+            imageurl = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=826"
         starting_price = request.POST["starting_price"]
         category = request.POST["category"]
 
