@@ -94,7 +94,7 @@
                         <form action="{% url 'addBid' id=listing.id %}" method="POST" class="d-flex">
                             {% csrf_token %}
                             <div class="form-group d-flex w-100">
-                                <input type="number" min="0" name="newBid" placeholder="Add New Bid" class="form-control" style="width: auto; margin-right: 10px;">
+                                <input type="number" min="0" step="0.01" name="newBid" placeholder="Add New Bid" class="form-control" style="width: auto; margin-right: 10px;">
                                 <button type="submit" class="btn btn-outline-dark">Place Bid</button>
                             </div>
                         </form>
@@ -108,9 +108,11 @@
                 </div>
                 <div class="col-md-9">
                     <p>
-                        {% for category in listing.categories.all %}
-                            <a href="{% url 'category' category.id %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
+                        {% if listing.category %}
+                            <a href="{% url 'displayCategory' listing.category.name %}">{{ listing.category.name }}</a>
+                        {% else %}
+                            No category assigned
+                        {% endif %}
                     </p>
                 </div>
             </div>

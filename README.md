@@ -8,6 +8,7 @@ The application is built using the [Django](https://www.djangoproject.com) web f
 
 [Project specification](https://cs50.harvard.edu/web/2020/projects/2/commerce/)
 
+[Demonstration Video](https://youtu.be/e19B2Tq2TiI?si=uXRhBq8eUveAnlTM)
 
 ## Technologies Used
 - **Django**: A Python web framework for rapid development.
